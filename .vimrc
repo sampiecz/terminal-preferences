@@ -59,3 +59,6 @@ set backspace=indent,eol,start
 
 " stop swp files  
 set noswapfile
+
+" make iterm like scrolling in vim
+set mouse=nicr
