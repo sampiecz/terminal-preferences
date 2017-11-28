@@ -62,3 +62,9 @@ set noswapfile
 
 " make iterm like scrolling in vim
 set mouse=nicr
+
+" try these bad larrys out
+set ai "Auto indent
+set si "Smart indent
+set wrap "Wrap lines
+
