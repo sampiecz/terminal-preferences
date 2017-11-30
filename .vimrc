@@ -68,3 +68,5 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+" Open vertical split window on the right rather than the left
+set splitright
