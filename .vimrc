@@ -14,15 +14,20 @@
 "     }}}`                            \                  HIM-HIM-HIM!!!  /
 "                                      '--------------------------------'
 "
-"    Duplicate File in Netrw
+"    Duplicate file in netrw
 "    =======================
 "    Set cursor on ./ (or directory in which you want to copy) , press mt
 "    Set cursor on file you want copy, press mf, then mc, type a name of new file, enter
 "    
+"
 "    Open last edited file
-"    =====================
+"    =======================
 "    e(space).(enter)
 "
+"
+"    Resize netrw file explorer
+"    =======================
+"    :vertical resize N
 
 
 syntax on
@@ -71,11 +76,16 @@ set wrap "Wrap lines
 " Open vertical split window on the right rather than the left
 set splitright
 
+" Resize lex with mouse
+set mouse=n
+" Make the aforementioned feature work with TMUX
+set ttymouse=xterm2
+
 " START ATTEMPT AT SEXY POWERLINE
 " Statusline (requires Powerline font) 
 " Fonts clone here --> https://github.com/powerline/fonts
 " Install them and set them in terminal preferences, any that have powerline
-" will suffice
+" will suffice. When on linux just place them in the ~/.fonts dir
 set statusline=
 set statusline+=%(%{&filetype!='help'?bufnr('%'):''}\ \ %)
 set statusline+=%< " Where to truncate line
@@ -90,10 +100,7 @@ set statusline+=%(\ \ %{&modifiable?(&expandtab?'et\ ':'noet\ ').&shiftwidth:
 set statusline+=\ 
 set statusline+=\ %{&number?'':printf('%2d,',line('.'))} " Line number
 set statusline+=%-2v " Virtual column number
-set statusline+=\ %2p%% " Percentage through file in lines as in |CTRL-G|
-
-" ------------------------ 8< ------------------------
-
+set statusline+=\ %2p%% " Percentage through file in lines as in |CTRL-G| " ------------------------ 8< ------------------------ 
 " Statusline with highlight groups (requires Powerline font, using Solarized theme)
 set statusline=
 set statusline+=%(%{&filetype!='help'?bufnr('%'):''}\ \ %)
