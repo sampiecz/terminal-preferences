@@ -73,6 +73,9 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+" makes pasting things not suck - keeps indentation
+set paste
+
 " Open vertical split window on the right rather than the left
 set splitright
 
