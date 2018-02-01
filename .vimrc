@@ -1,5 +1,4 @@
-"               ,
-"              / \,,_  .'|
+"               , "              / \,,_  .'|
 "           ,{{| /}}}}/_.'
 "          }}}}` '{{'  '.
 "        {{{{{    _   ;, \
@@ -29,10 +28,12 @@
 "    =======================
 "    :vertical resize N
 
+set ch=2		" Make command line two lines high
+set mousehide		" Hide the mouse when typing text
 
 syntax on
 set number
-"let g:solarized_termcolors=16
+"let g:solarized_termcolors=256
 colorscheme solarized
 set background=dark
 "
@@ -72,9 +73,6 @@ set mouse=nicr
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
-
-" makes pasting things not suck - keeps indentation
-set paste
 
 " Open vertical split window on the right rather than the left
 set splitright
@@ -128,3 +126,45 @@ hi StatusLine cterm=reverse gui=reverse ctermfg=14 ctermbg=8 guifg=#93a1a1 guibg
 hi StatusLineNC cterm=reverse gui=reverse ctermfg=11 ctermbg=0 guifg=#657b83 guibg=#073642
 hi User1 ctermfg=14 ctermbg=0 guifg=#93a1a1 guibg=#073642
 set laststatus=2
+
+
+
+
+
+
+
+
+" See how this works, I'm guessing it highlights shit.
+" Only do this for Vim version 5.0 and later.
+if version >= 500
+
+  " I like highlighting strings inside C comments
+  let c_comment_strings=1
+
+  " Switch on syntax highlighting if it wasn't on yet.
+  if !exists("syntax_on")
+    syntax on
+  endif
+
+  " Switch on search pattern highlighting.
+  set hlsearch
+
+  " For Win32 version, have "K" lookup the keyword in a help file
+  "if has("win32")
+  "  let winhelpfile='windows.hlp'
+  "  map K :execute "!start winhlp32 -k <cword> " . winhelpfile <CR>
+  "endif
+
+  " Set nice colors
+  " background for normal text is light grey
+  " Text below the last line is darker grey
+  " Cursor is green, Cyan when ":lmap" mappings are active
+  " Constants are not underlined but have a slightly lighter background
+  highlight Normal guibg=grey90
+  highlight Cursor guibg=Green guifg=NONE
+  highlight lCursor guibg=Cyan guifg=NONE
+  highlight NonText guibg=grey80
+  highlight Constant gui=NONE guibg=grey95
+  highlight Special gui=NONE guibg=grey95
+
+endif
