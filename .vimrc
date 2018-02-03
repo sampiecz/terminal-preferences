@@ -134,8 +134,8 @@ set laststatus=2
 
 
 
-" See how this works, I'm guessing it highlights shit.
-" Only do this for Vim version 5.0 and later.
+" This highlights all instances of a word when searching them as well as being able to 
+"  Cycle them.
 if version >= 500
 
   " I like highlighting strings inside C comments
