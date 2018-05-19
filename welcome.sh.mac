@@ -1,0 +1,10 @@
+#!/bin/sh 
+if [ $1 = "-q" ]
+	then
+		VBoxManage controlvm "dev" poweroff 
+	else
+		VBoxManage startvm "dev" --type headless
+		tmux new-window \; split-window -d \; attach ~/Projects/CorrelatePro/	
+		workon correlate_pro
+		eval $(docker-machine env dev)
+fi
