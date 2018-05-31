@@ -18,9 +18,9 @@ echo -en "\e]PFfdf6e3" #brwhite
 clear #for background artifacting
 fi
 
-alias tb="workon TB_Automator && cd ~/Projects/TB_Automator && clear"
-alias cor="workon correlate_pro && cd ~/PycharmProjects/CorrelatePro && clear"
-alias gb="cd ~/Documents/Greenbridge_Consulting && ls"
-alias art="workon art && cd ~/PycharmProjects/art && clear"
-alias vim="TERM=screen-256color vim"
-alias turing="ssh z1732715@turing.cs.niu.edu"
+#alias tb="workon TB_Automator && cd ~/Projects/TB_Automator && clear"
+#alias cor="workon correlate_pro && cd ~/PycharmProjects/CorrelatePro && clear"
+#alias gb="cd ~/Documents/Greenbridge_Consulting && ls"
+#alias art="workon art && cd ~/PycharmProjects/art && clear"
+#alias vim="TERM=screen-256color vim"
+#alias turing="ssh z1732715@turing.cs.niu.edu"

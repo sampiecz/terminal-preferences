@@ -4,36 +4,40 @@ export PROJECT_HOME=$HOME/code
 export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
 export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
-
 source /usr/local/bin/virtualenvwrapper.sh
 
+# Command line emoji see where output starts on long commands
 export PS1="\u@\h \w 🍔  "
-#echo -en "\e]P0073642" #black
-#echo -en "\e]P8002b36" #brblack
-#echo -en "\e]P1dc322f" #red
-#echo -en "\e]P9cb4b16" #brred
-#echo -en "\e]P2859900" #green
-#echo -en "\e]PA586e75" #brgreen
-#echo -en "\e]P3b58900" #yellow
-#echo -en "\e]PB657b83" #bryellow
-#echo -en "\e]P4268bd2" #blue
-#echo -en "\e]PC839496" #brblue
-#echo -en "\e]P5d33682" #magenta
-#echo -en "\e]PD6c71c4" #brmagenta
-#echo -en "\e]P62aa198" #cyan
-#echo -en "\e]PE93a1a1" #brcyan
-#echo -en "\e]P7eee8d5" #white
-#echo -en "\e]PFfdf6e3" #brwhite
-#clear #for background artifacting
 
+# Alias for projects
 alias ls="ls -G"
 alias tb="workon TB_Automator && cd ~/Projects/TB_Automator && clear"
-alias cor="workon correlate_pro && cd ~/PycharmProjects/CorrelatePro && clear "
+alias cor="./welcome.sh"
+alias cp="cd ~/Projects/CorrelatePro && clear"
+alias claer="clear"
 alias js="cd ~/Code/JS && clear"
 alias gb="cd ~/Documents/Greenbridge_Consulting && clear"
 alias feg="cd ~/Documents/Greenbridge_Consulting/FEG && clear"
 alias ncsa="cd ~/Documents/Greenbridge_Consulting/NCSA && clear"
 alias bento="cd ~/Documents/Greenbridge_Consulting/Bento && clear"
 alias art="workon art && cd ~/jacobmartinezdesigns && clear"
+
+# Editor
 alias vim="TERM=screen-256color vim"
+
+# Surf the web in terminal
 alias w3m="w3m -num www.duckduckgo.com"
+
+# Docker & django quick commands local
+alias wo="workon correlate_pro"
+alias edm="eval \$(docker-machine env dev)"
+alias mm="docker-compose -f local.yml run django python manage.py makemigrations"
+alias m="docker-compose -f local.yml run django python manage.py migrate"
+alias b="docker-compose -f local.yml build"
+alias u="docker-compose -f local.yml up"
+
+# Docker & django quick commands prod 
+alias mmp="docker-compose -f local.yml run django python manage.py makemigrations"
+alias mp="docker-compose -f local.yml run django python manage.py migrate"
+alias bp="docker-compose -f local.yml build"
+alias upd="docker-compose -f local.yml up -d"
