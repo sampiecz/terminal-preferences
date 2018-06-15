@@ -12,7 +12,7 @@ tmux send-keys "cd $DEV_PATH" C-m
 tmux send-keys "clear" C-m
 tmux send-keys "VBoxManage startvm 'dev' --type headless" C-m
 tmux send-keys "clear" C-m
-tmux send-keys "workon correlate_pro" C-m
+tmux send-keys "workon CorrelatePro" C-m
 tmux send-keys "clear" C-m
 tmux send-keys "git pull origin master" C-m
 tmux send-keys "eval \$(docker-machine env dev)" C-m
