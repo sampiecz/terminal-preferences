@@ -37,7 +37,7 @@ alias b="docker-compose -f local.yml build"
 alias u="docker-compose -f local.yml up"
 
 # Docker & django quick commands prod 
-alias mmp="docker-compose -f local.yml run django python manage.py makemigrations"
-alias mp="docker-compose -f local.yml run django python manage.py migrate"
-alias bp="docker-compose -f local.yml build"
-alias upd="docker-compose -f local.yml up -d"
+alias mmp="docker-compose -f production.yml run django python manage.py makemigrations"
+alias mp="docker-compose -f production.yml run django python manage.py migrate"
+alias bp="docker-compose -f production.yml build"
+alias upd="docker-compose -f production.yml up -d"
