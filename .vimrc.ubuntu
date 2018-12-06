@@ -28,8 +28,9 @@
 syntax on
 set number
 let g:solarized_termcolors=16
-colorscheme solarized
+colorscheme abstract
 set background=dark
+
 "
 filetype plugin indent on
 "" show existing tab with 4 spaces width
@@ -39,7 +40,8 @@ set shiftwidth=4
 " " On pressing tab, insert 4 spaces
 set expandtab
 
-setlocal spell spelllang=en_us
+" Spellcheck
+"setlocal spell spelllang=en_us
 
 let g:netrw_banner = 0
 let g:netrw_winsize = 15
