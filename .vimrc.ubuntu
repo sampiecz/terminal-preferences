@@ -28,15 +28,14 @@
 syntax on
 set number
 let g:solarized_termcolors=16
-colorscheme abstract
 set background=dark
 
 "
 filetype plugin indent on
 "" show existing tab with 4 spaces width
-set tabstop=4
+set tabstop=2
 " when indenting with '>', use 4 spaces width
-set shiftwidth=4
+set shiftwidth=2
 " " On pressing tab, insert 4 spaces
 set expandtab
 
@@ -69,8 +68,8 @@ set mouse=nicr
 
 " try these bad larrys out
 set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
+set nowrap "Wrap lines
+set foldmethod=indent 
 
 " Open vertical split window on the right rather than the left
 set splitright
@@ -129,3 +128,26 @@ if &term =~ '^screen'
     " tmux knows the extended mouse mode
     set ttymouse=xterm2
 endif
+set rtp+=~/tabnine-vim
+
+"Use TAB to complete when typing words, else inserts TABs as usual.
+"Uses dictionary and source files to find matching words to complete.
+
+"See help completion for source,
+"Note: usual completion is on <C-n> but more trouble to press all the time.
+"Never type the same word twice and maybe learn a new spellings!
+"Use the Linux dictionary when spelling is in doubt.
+"Window users can copy the file to their machine.
+function! Tab_Or_Complete()
+  if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+    return "\<C-N>"
+  else
+    return "\<Tab>"
+  endif
+endfunction
+:inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+:set dictionary="/usr/dict/words"
+
+
+inoremap { {}<Esc>ba
+inoremap [ []<Esc>ba
