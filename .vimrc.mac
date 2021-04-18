@@ -34,17 +34,17 @@
 " Hide the mouse when typing text
 set mousehide
 
+
 syntax on
 set number
 "let g:solarized_termcolors=16
-colorscheme solarized
 set background=dark
 "
 filetype plugin indent on
 "" show existing tab with 4 spaces width
-set tabstop=4
+set tabstop=2
 " when indenting with '>', use 4 spaces width
-set shiftwidth=4
+set shiftwidth=2
 " " On pressing tab, insert 4 spaces
 set expandtab
 
@@ -72,10 +72,6 @@ set noswapfile
 " make iterm like scrolling in vim
 set mouse=nicr
 
-" try these bad larrys out
-set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
 
 " makes pasting things not suck - keeps indentation
 set paste
@@ -167,3 +163,16 @@ if version >= 500
   highlight Special gui=NONE guibg=grey95
 
 endif
+
+set nowrap
+set smartindent
+set autoindent
+
+set rtp+=~/tabnine-vim
+
+set path+=**
+set wildmenu
+set wildignore+=**/node_modules/**
+set wildignore+=**/bundles/**
+
+command! MakeTags !ctags -R .

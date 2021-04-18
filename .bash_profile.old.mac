@@ -1,0 +1,61 @@
+# virtualenv
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/samuel
+source /usr/local/bin/virtualenvwrapper.sh
+
+# Command line emoji see where output starts on long commands
+export PS1="\u@\h \w 🌝  "
+
+# Alias for projects
+alias ls="ls -G"
+alias tb="workon TB_Automator && cd ~/Projects/TB_Automator && clear"
+alias cor="./welcome.sh"
+alias claer="clear"
+alias js="cd ~/Code/JS && clear"
+alias gb="cd ~/Documents/Greenbridge_Consulting && clear"
+alias feg="cd ~/Documents/Greenbridge_Consulting/FEG && clear"
+alias ncsa="cd ~/Documents/Greenbridge_Consulting/NCSA && clear"
+alias bento="cd ~/Documents/Greenbridge_Consulting/Bento && clear"
+alias art="workon art && cd ~/jacobmartinezdesigns && clear"
+
+# Editor
+alias vim="TERM=screen-256color vim"
+
+# Surf the web in terminal
+alias w3m="w3m -num www.duckduckgo.com"
+
+# Docker & django quick commands local
+alias wo="workon samuelpiecz.com"
+alias dmls="docker-machine ls"
+alias edm="eval \$(docker-machine env samuelpiecz.com)"
+alias mm="docker-compose -f local.yml run django python manage.py makemigrations"
+alias m="docker-compose -f local.yml run django python manage.py migrate"
+alias b="docker-compose -f local.yml build"
+alias u="docker-compose -f local.yml up"
+
+# Docker & django quick commands prod 
+alias mmp="docker-compose -f local.yml run django python manage.py makemigrations"
+alias mp="docker-compose -f local.yml run django python manage.py migrate"
+alias bp="docker-compose -f local.yml build"
+alias upd="docker-compose -f local.yml up -d"
+
+# Git
+alias gs="git status"
+alias gd="git diff"
+alias gp="git pull"
+alias ga="git add -p"
+alias gc="git commit"
+
+# Mobile Dev
+export ANDROID_HOME=$HOME/Library/Android/sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
