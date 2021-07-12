@@ -99,7 +99,8 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export PS1="$PS1🍇 "
+
 alias git-ssh='eval "$(ssh-agent -s)" && ssh-add -k ~/.ssh/id_ed25519'
 alias claer="clear"
 export LD_LIBRARY_PATH="/usr/local/lib/tup:$LD_LIBRARY_PATH"
+export EDITOR="vim"
