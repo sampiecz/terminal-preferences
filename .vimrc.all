@@ -1,0 +1,529 @@
+"               ,
+"              / \,,_  .'|
+"           ,{{| /}}}}/_.'
+"          }}}}` '{{'  '.
+"        {{{{{    _   ;, \
+"     ,}}}}}}    /o`\  ` ;)
+"    {{{{{{   /           (
+"    }}}}}}   |            \
+"   {{{{{{{{   \            \          ,-------------------------------.
+"   }}}}}}}}}   '.__      _  |        /       HI                        \
+"   {{{{{{{{       /`._  (_\ /       /      /   \                        |
+"    }}}}}}'      |    //___/   --= <   VVVI     HI-HI-HI                |
+"    `{{{{`       |     '--'         \                   \               |
+"     }}}`                            \                  HIM-HIM-HIM!!!  /
+"                                      '--------------------------------'
+"
+
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+" Add maktaba and coverage to the runtimepath.
+" (The latter must be installed before it can be used.)
+Plugin 'psf/black'
+Plugin 'google/vim-maktaba'
+Plugin 'google/vim-codefmt'
+Plugin 'google/vim-coverage'
+Plugin 'google/vim-searchindex'
+" Also add Glaive, which is used to configure coverage's maktaba flags. See
+" `:help :Glaive` for usage.
+Plugin 'google/vim-glaive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'dense-analysis/ale'
+Plugin 'prettier/vim-prettier'
+Plugin 'puremourning/vimspector'
+Plugin 'ruanyl/coverage.vim'
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+call glaive#Install()
+" Optional: Enable coverage's default mappings on the <Leader>C prefix.
+Glaive coverage plugin[mappings]
+
+" Codefmt stuff
+augroup autoformat_settings
+  autocmd FileType bzl AutoFormatBuffer buildifier
+  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+  autocmd FileType dart AutoFormatBuffer dartfmt
+  autocmd FileType go AutoFormatBuffer gofmt
+  autocmd FileType gn AutoFormatBuffer gn
+  autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
+  autocmd FileType java AutoFormatBuffer google-java-format
+  autocmd FileType python AutoFormatBuffer yapf
+  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
+  autocmd FileType rust AutoFormatBuffer rustfmt
+  autocmd FileType vue AutoFormatBuffer prettier
+augroup END
+
+"
+" END VUNDLE CONFIG
+"
+
+
+"""""""""""""""""""""""""""
+" Hide the mouse when typing text
+"""""""""""""""""""""""""""
+set mousehide
+
+
+"""""""""""""""""""""""""""
+" Show syntax highlighting, who wouldn't want this
+"""""""""""""""""""""""""""
+syntax on
+
+
+"""""""""""""""""""""""""""
+" We like light themes now
+"""""""""""""""""""""""""""
+set background=light
+
+
+"""""""""""""""""""""""""""
+" Indenting 
+"""""""""""""""""""""""""""
+filetype plugin indent on
+
+
+"""""""""""""""""""""""""""
+" Netrw
+"""""""""""""""""""""""""""
+let g:netrw_banner = 0
+let g:netrw_winsize = 25
+
+
+"""""""""""""""""""""""""""
+" setting split to 3 opens in new tab
+" setting split to 0 opens in current tab
+"""""""""""""""""""""""""""
+let g:netrw_browse_split = 0
+let g:netrw_liststyle = 3
+
+
+"""""""""""""""""""""""""""
+" ugly indent guides
+"""""""""""""""""""""""""""
+" set listchars=tab:\|\
+" set list
+
+
+"""""""""""""""""""""""""""
+" backspaces trouble 
+"""""""""""""""""""""""""""
+set backspace=indent,eol,start
+
+
+"""""""""""""""""""""""""""
+" nobody likes swp files
+"""""""""""""""""""""""""""
+set noswapfile
+
+
+"""""""""""""""""""""""""""
+" scrolling 
+"""""""""""""""""""""""""""
+set mouse=nicr
+
+
+"""""""""""""""""""""""""""
+" Open vertical split 
+" on the right not left
+"""""""""""""""""""""""""""
+set splitright
+
+"""""""""""""""""""""""""""
+" Support mouse resizing
+"""""""""""""""""""""""""""
+set mouse=n
+" make this work with tmux
+set ttymouse=xterm2
+
+"""""""""""""""""""""""""""
+" XXX
+"""""""""""""""""""""""""""
+set nowrap
+set smartindent
+set autoindent
+
+"""""""""""""""""""""""""""
+" Folds
+"""""""""""""""""""""""""""
+set foldmethod=indent
+
+
+"""""""""""""""""""""""""""
+" Make completion nicer
+"""""""""""""""""""""""""""
+set path+=**
+set wildmenu
+set wildignore+=**/node_modules/**
+set wildignore+=**/bundles/**
+
+
+"""""""""""""""""""""""""""
+" Ctags
+"""""""""""""""""""""""""""
+command! MakeTags !ctags -R .
+
+
+"""""""""""""""""""""""""""
+" Color preferences
+"""""""""""""""""""""""""""
+hi StatusLine ctermbg=white ctermfg=13
+hi StatusLineNC ctermbg=black ctermfg=6
+hi StatusLineTerm term=bold,reverse cterm=bold,reverse ctermfg=13 ctermbg=15 gui=bold,reverse
+hi StatusLineTermNC term=reverse cterm=reverse ctermfg=6 ctermbg=0 gui=reverse
+
+
+"""""""""""""""""""""""""""
+" Wall of terrible default
+" remaps that need to be 
+" broken into functions
+"""""""""""""""""""""""""""
+let mapleader = "-"
+let pythondebug = "import pudb; pu.db" 
+
+" Yank Searcher 
+nnoremap <leader>gt :vsplit<cr>:set foldmethod=manual<cr><C-w>T<cr>:silent execute "grep " . shellescape(expand('<C-r>"')) . " -inr --exclude=tags --exclude-dir=node_modules --exclude-dir=__snapshots__ --exclude-dir=.git/ --exclude-dir=coverage/ --exclude-dir=__pycache__ --exclude-dir=.pytest_cache --exclude-dir=tests --exclude-dir=test --exclude=package-lock.json --exclude=package.json --exclude=.eslintrc . "<cr>:copen<cr><C-w>:source ~/.vimrc<cr>
+nnoremap <leader>g :vsplit<cr>:set foldmethod=manual<cr>:silent execute "grep " . shellescape(expand('<C-r>"')) . " -inr --exclude=tags --exclude-dir=node_modules --exclude-dir=__snapshots__ --exclude-dir=.git/ --exclude-dir=coverage/ --exclude-dir=__pycache__ --exclude-dir=.pytest_cache --exclude-dir=tests --exclude-dir=test --exclude=package-lock.json --exclude=package.json --exclude=.eslintrc . "<cr>:copen<cr><C-w>:source ~/.vimrc<cr>
+nnoremap <leader>j :copen<cr>:cnext<cr>
+nnoremap <leader>k :copen<cr>:cprevious<cr>
+
+" Test be - django
+nnoremap <leader>tbd :let testClass = shellescape(expand('<C-r>"'))<cr>:let testFilePathWithFile = @%<cr>:let testFilePathDir = expand('%:p:h')<cr>:let testFilePathParentDir = split(expand('%:p:h'), '\/')[-2]<cr>:let testCommand = 'source ~/env.sh && pytest --cov=' . testFilePathParentDir . ' ' . testFilePathDir . ' --cov-report=html -k ' . testClass . ' -s'<cr>:term<cr><C-w>:call term_sendkeys('', testCommand)<cr> <cr><C-w>L<C-w>h
+nnoremap <leader>tbdf :let testFunction = shellescape(expand('<C-r>"'))<cr>:let testFilePathWithFile = @%<cr>:let testFilePathDir = expand('%:p:h')<cr>:let testFilePathParentDir = split(expand('%:p:h'), '\/')[-2]<cr>:let testCommand = 'source ~/env.sh && pytest --cov=' . testFilePathParentDir . ' ' . testFilePathDir . ' --cov-report=html -k ' . testFunction . ' -s'<cr>:term<cr><C-w>:call term_sendkeys('', testCommand)<cr> <cr><C-w>L<C-w>h
+
+" Test be - open api
+nnoremap <leader>tbo :let testClass = expand('<C-r>"')<cr>:let testFileFullPath = expand('%')<cr>:let testCommand = 'pyenv shell 3.9.7 && poetry run bin/test -m "not e2e" ' . testFileFullPath . '::' . testClass . ' --cov="." --cov-report=html'<cr>:term<cr><C-w>:call term_sendkeys('', testCommand)<cr> <cr><C-w>L<C-w>h
+nnoremap <leader>tbof :let testFunction = expand('<C-r>"')<cr>?class<cr>wv$F:hy<C-w>:let testClass = expand('<C-r>"')<cr>:let testFileFullPath = expand('%')<cr>:let testCommand = 'pyenv shell 3.9.7 && poetry run bin/test -m "not e2e" ' . testFileFullPath . '::' . testClass . '::' . testFunction . ' --cov="." --cov-report=html'<cr>:term<cr><C-w>:call term_sendkeys('', testCommand)<cr> <cr><C-w>J<C-w>:resize 5<cr><C-w>k
+
+" Debug be
+nnoremap <leader>b :let @8 = pythondebug<cr><C-w>:a<cr><C-r>8<cr>.<cr><C-w>:w<cr>
+nnoremap <leader>bt :let @8 = pythondebug<cr><C-w>:a<cr><C-r>8<cr>.<cr><C-w>:w<cr><C-w>:term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'screen -r -d -p 3')<cr> <cr>
+nnoremap <leader>br :let @8 = "from pudb.remote import set_trace; set_trace(term_size=(176,75), host='0.0.0.0', port=6900)"<cr><C-w>:a<cr><C-r>8<cr>.<cr><C-w>:w<cr> <cr>
+nnoremap <leader>brt :let @8 = "from pudb.remote import set_trace; set_trace(term_size=(176,75), host='0.0.0.0', port=6900)"<cr><C-w>:a<cr><C-r>8<cr>.<cr><C-w>:w<cr> <cr><C-w>:term<cr><C-w>L<C-w>:call term_sendkeys('', 'screen -r -d -p 3')<cr> <cr>
+nnoremap <leader>bc :%s/import pudb; pu\.db//g<cr>
+
+" Screen splits
+nnoremap <leader>sb :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'screen -r -d -p 3')<cr> <cr>
+nnoremap <leader>sbh :split<cr><C-w>j<cr><C-w>:term<cr> <cr><C-w>:call term_sendkeys('', 'screen -r -d -p 3')<cr> <cr><C-w>j<C-w>:q!<cr><C-w>k
+nnoremap <leader>sf :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'screen -r -d -p 1')<cr> <cr>
+nnoremap <leader>sfh :split<cr><C-w>j<cr><C-w>:term<cr> <cr><C-w>:call term_sendkeys('', 'screen -r -d -p 1')<cr> <cr><C-w>j<C-w>:q!<cr><C-w>k
+nnoremap <leader>st :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'screen -r -d -p 5')<cr> <cr>
+nnoremap <leader>sth :split<cr><C-w>j<cr><C-w>:term<cr> <cr><C-w>:call term_sendkeys('', 'screen -r -d -p 5')<cr> <cr><C-w>j<C-w>:q!<cr><C-w>k
+
+" Git splits
+nnoremap <leader>gd :let currentFileFullPath = expand('%:p')<cr>:let gitDiffCommand = 'git diff ' . currentFileFullPath<cr>:term<cr><C-w>:call term_sendkeys('', gitDiffCommand)<cr> <cr><C-w>L
+nnoremap <leader>gda :let gitDiffAllCommand = 'git diff'<cr>:term<cr><C-w>:call term_sendkeys('', gitDiffAllCommand)<cr> <cr><C-w>L
+nnoremap <leader>gdb :new<cr>:r!git branch<cr>?*<cr>wv$hy<C-w>:let currentGitBranch = shellescape(expand('<C-r>"'))<cr><C-w>:q!<cr>:let gitDiffBranchCommand = 'git diff develop...' . currentGitBranch<cr>:term<cr><C-w>:call term_sendkeys('', gitDiffBranchCommand)<cr> <cr><C-w>L
+nnoremap <leader>gdbf :let currentFileFullPath = expand('%:p')<cr>:new<cr>:r!git branch<cr>?*<cr>wv$hy<C-w>:let currentGitBranch = shellescape(expand('<C-r>"'))<cr><C-w>:q!<cr>:let gitDiffBranchCommand = 'git diff develop...' . currentGitBranch . ' ' . currentFileFullPath<cr>:term<cr><C-w>:call term_sendkeys('', gitDiffBranchCommand)<cr> <cr><C-w>L
+nnoremap <leader>gb :let currentLineNumber = line ('.')<cr>:let currentFileFullPath = expand('%:p')<cr>:let gitBlameCommand = 'git blame ' . currentFileFullPath . ' --color-by-age -w'<cr>:term<cr><C-w>:call term_sendkeys('', gitBlameCommand)<cr> <cr><C-w>L<C-w>:let goToLine = currentLineNumber . 'G'<cr><C-w>:call term_sendkeys('', goToLine)<cr>
+nnoremap <leader>gcb :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'cleanup && git add -p && git commit -e')<cr> <cr>
+nnoremap <leader>gcbt :tabnew<cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'cleanup && git add -p && git commit -e')<cr> <cr>
+nnoremap <leader>gcbh :split<cr><C-w>j<cr><C-w>:term<cr> <cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'cleanup && git add -p && git commit -e')<cr> <cr><C-w>j<C-w>:q!<cr>
+nnoremap <leader>gcf :tabnew<cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'npm run lint:fix && git add -p && git commit -e')<cr> <cr>
+nnoremap <leader>gcfh :split<cr><C-w>j<cr><C-w>:term<cr> <cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'npm run lint:fix && git add -p && git commit -e')<cr> <cr><C-w>j<C-w>:q!<cr>
+" XXX - put proper directories here
+nnoremap <leader>gbe :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'cd ~/backend')<cr> <cr>
+nnoremap <leader>gfe :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'cd ~/frontend')<cr> <cr>
+
+" Refresh 
+nnoremap <leader>r <C-w>v<C-w>H<C-w>:q!<cr>
+nnoremap <leader>rs <C-w>:source ~/.vimrc<cr>
+
+" Debug fe
+nnoremap <leader>tf :let testFilePathWithFile = @%<cr>:let noJsExtension = substitute(expand(testFilePathWithFile), '.js', '', 'g')<cr>:let testCommand = 'npm run test ' . noJsExtension<cr>:term<cr><C-w>:call term_sendkeys('', testCommand)<cr> <cr><C-w>J<C-w>k
+nnoremap <leader>tfu :let testFilePathWithFile = @%<cr>:let noJsExtension = substitute(expand(testFilePathWithFile), '.js', '', 'g')<cr>:let testCommand = 'npm run test -- --u ' . noJsExtension<cr>:term<cr><C-w>:call term_sendkeys('', testCommand)<cr> <cr><C-w>J<C-w>k
+nnoremap <leader>tfc :let testFilePathWithFile = @%<cr>:let noJsExtension = substitute(expand(testFilePathWithFile), '.js', '', 'g')<cr>:let fileName = expand('%:t:r')<cr>:let testCommand = 'npm run test -- --coverage ' . noJsExtension<cr>:term<cr><C-w>:call term_sendkeys('', testCommand)<cr> <cr><C-w>L
+nnoremap <leader>tfch :let testFilePathWithFile = @%<cr>:let noJsExtension = substitute(expand(testFilePathWithFile), '.js', '', 'g')<cr>:let fileName = expand('%:t:r')<cr>:let testCommand = 'npm run test -- --coverage ' . noJsExtension<cr>:term<cr><C-w>:call term_sendkeys('', testCommand)<cr> <cr>
+
+" Quick file buffer 
+nnoremap <leader>e :edit!<cr>
+nnoremap <leader>q :q!<cr>
+nnoremap <leader>ql <C-w>h<C-w>:q!<cr>
+nnoremap <leader>qr <C-w>l<C-w>:q!<cr>
+nnoremap <leader>o :only!<cr>
+
+" Quick file tree explorer
+nnoremap <leader>l :Lex
+nnoremap <leader>v :Vex
+
+" Console log
+nnoremap <leader>cl :let toLog = expand("<cword>")<cr><C-w>:let @9 = "console.log('" . toLog . "', " . toLog . ");"<cr><C-w>:a<cr><C-r>9<cr>.<cr>
+
+" Searchbar 
+function! Search(searchString)
+  :tabnew
+  :set foldmethod=manual
+  :silent execute "grep " . shellescape(expand(a:searchString)) . " -inr --exclude=tags --exclude-dir=node_modules --exclude-dir=__snapshots__ --exclude-dir=.git/ --exclude-dir=coverage/ --exclude-dir=__pycache__ --exclude-dir=.pytest_cache --exclude-dir=tests --exclude-dir=test --exclude=package-lock.json --exclude=package.json --exclude=.eslintrc . "
+  :copen
+endfunction
+command! -nargs=1 S call Search(<f-args>)
+nnoremap <leader>s :S 
+
+" Searchbar tests
+function! SearchTests(searchString)
+  :tabnew
+  :set foldmethod=manual
+  :silent execute "grep " . shellescape(expand(a:searchString)) . " -inr --exclude=tags --exclude-dir=node_modules --exclude-dir=__snapshots__ --exclude-dir=.git/ --exclude-dir=coverage/ --exclude-dir=__pycache__ --exclude-dir=.pytest_cache --exclude=package-lock.json --exclude=package.json --exclude=.eslintrc . "
+  :copen
+endfunction
+command! -nargs=1 ST call SearchTests(<f-args>)
+nnoremap <leader>st :ST  
+
+" Searchbar all 
+function! SearchAll(searchString)
+  :tabnew
+  :set foldmethod=manual
+  :silent execute "grep " . shellescape(expand(a:searchString)) . " -inr . "
+  :copen
+endfunction
+command! -nargs=1 SA call SearchAll(<f-args>)
+nnoremap <leader>sa :SA  
+
+" Django quick commands
+nnoremap <leader>ds :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'cd && source env.sh && ./manage.py shell_plus')<cr> <cr><C-L>
+nnoremap <leader>dm :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'cd && source env.sh && ./manage.py migrate')<cr> <cr><C-L>
+nnoremap <leader>dmm :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'cd && source env.sh && ./manage.py makemigrations')<cr> <cr><C-L>
+
+" " Branch Switcher
+" function BranchSwitch()
+"   :term
+"   :L
+"   :call term_sendkeys('', 'tmux display-message -p "#S"')
+"   :normal 
+"   " :call term_wait('', 30)
+"   " <C-w>Nkv$hy<Insert>
+"   " :let @8 = tolower(expand('<C-r>"'))
+"   " XXX put dynamic project name here
+"   " :call term_sendkeys('', 'cd ~/frontend/ && git stash && git fetch -a')
+"   " :call term_wait('', 50)
+"   " :call term_sendkeys('', 'git branch -a')
+"   " :call term_wait('', 1400)
+"   " G
+"   " :call term_wait('', 10)
+"   " gg
+"   " <C-w>N?<C-r>8<cr>v$hy<Insert>q
+"   " :let fullBranchName = expand('<C-r>"')
+"   " :call term_sendkeys('', 'cd && ./switch_fe.sh')
+"   " :call term_wait('', 500)
+"   " :call term_sendkeys('', fullBranchName)
+"   " :call term_wait('', 1000)
+"   " :call term_sendkeys('', 'exit')
+"   " :call term_wait('', 10)
+"   " :echo 'Swiched to branch: ' . fullBranchName
+" endfunction
+" nnoremap <leader>bs :call BranchSwitch()<cr>
+
+" XXX place dynamic file paths here
+nnoremap <leader>bsf :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'tmux display-message -p "#S"')<cr> <cr><C-w>:call term_wait('', 30)<cr> <cr><C-w>Nkv$hy<Insert><cr> <cr><C-w>:let @8 = tolower(expand('<C-r>"'))<cr> <cr><C-w>:call term_sendkeys('', 'cd ~/frontend/ && git stash && git fetch -a')<cr> <cr><C-w>:call term_wait('', 50)<cr> <cr><C-w>:call term_sendkeys('', 'git branch -a')<cr> <cr><C-w>:call term_wait('', 1400)<cr> <cr>G<C-w>:call term_wait('', 10)<cr> <cr>gg<C-w>N?<C-r>8<cr>v$hy<Insert>q<C-w>:let fullBranchName = expand('<C-r>"')<cr> <cr><C-w>:call term_sendkeys('', 'cd && ./switch_fe.sh')<cr> <cr><C-w>:call term_wait('', 500)<cr> <cr><C-w>:call term_sendkeys('', fullBranchName)<cr> <cr><C-w>:call term_wait('', 1000)<cr> <cr><C-w>:call term_sendkeys('', 'exit')<cr> <cr><C-w>:call term_wait('', 10)<cr> <cr><C-w>:echo 'Swiched to branch: ' . fullBranchName<cr> <cr>
+nnoremap <leader>bsb :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'tmux display-message -p "#S"')<cr> <cr><C-w>:call term_wait('', 30)<cr> <cr><C-w>Nkv$hy<Insert><cr> <cr><C-w>:let @8 = tolower(expand('<C-r>"'))<cr> <cr><C-w>:call term_sendkeys('', 'cd ~/backend/ && git stash && git fetch -a')<cr> <cr><C-w>:call term_wait('', 50)<cr> <cr><C-w>:call term_sendkeys('', 'git branch -a')<cr> <cr><C-w>:call term_wait('', 1400)<cr> <cr>G<C-w>:call term_wait('', 10)<cr> <cr>gg<C-w>N?<C-r>8<cr>v$hy<Insert>q<C-w>:let fullBranchName = expand('<C-r>"')<cr> <cr><C-w>:call term_sendkeys('', 'cd && ./switch_be.sh')<cr> <cr><C-w>:call term_wait('', 500)<cr> <cr><C-w>:call term_sendkeys('', fullBranchName)<cr> <cr><C-w>:call term_wait('', 1000)<cr> <cr><C-w>:call term_sendkeys('', 'exit')<cr> <cr><C-w>:call term_wait('', 10)<cr> <cr><C-w>:echo 'Swiched to branch: ' . fullBranchName<cr> <cr>
+
+" nnoremap <leader>bsf :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'tmux display-message -p "#S"')<cr> <cr><C-w>:call term_wait('', 30)<cr> <cr><C-w>Nkv$hy<Insert><cr> <cr><C-w>:let @8 = tolower(expand('<C-r>"'))<cr> <cr><C-w>:call term_sendkeys('', 'cd ~/frontend/ && git stash && git fetch -a')<cr> <cr><C-w>:call term_wait('', 50)<cr> <cr><C-w>:call term_sendkeys('', 'git branch -a')<cr> <cr><C-w>:call term_wait('', 1400)<cr> <cr>G<C-w>:call term_wait('', 10)<cr> <cr>gg<C-w>N?<C-r>8<cr>v$hy<Insert>q<C-w>:let fullBranchName = expand('<C-r>"')<cr> <cr><C-w>:call term_sendkeys('', 'cd && ./switch_fe.sh')<cr> <cr><C-w>:call term_wait('', 500)<cr> <cr><C-w>:call term_sendkeys('', fullBranchName)<cr> <cr><C-w>:call term_wait('', 1000)<cr> <cr><C-w>:call term_sendkeys('', 'exit')<cr> <cr><C-w>:call term_wait('', 10)<cr> <cr><C-w>:echo 'Swiched to branch: ' . fullBranchName<cr> <cr>
+" nnoremap <leader>bsb :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'tmux display-message -p "#S"')<cr> <cr><C-w>:call term_wait('', 30)<cr> <cr><C-w>Nkv$hy<Insert><cr> <cr><C-w>:let @8 = tolower(expand('<C-r>"'))<cr> <cr><C-w>:call term_sendkeys('', 'cd ~/backend/ && git stash && git fetch -a')<cr> <cr><C-w>:call term_wait('', 50)<cr> <cr><C-w>:call term_sendkeys('', 'git branch -a')<cr> <cr><C-w>:call term_wait('', 1400)<cr> <cr>G<C-w>:call term_wait('', 10)<cr> <cr>gg<C-w>N?<C-r>8<cr>v$hy<Insert>q<C-w>:let fullBranchName = expand('<C-r>"')<cr> <cr><C-w>:call term_sendkeys('', 'cd && ./switch_be.sh')<cr> <cr><C-w>:call term_wait('', 500)<cr> <cr><C-w>:call term_sendkeys('', fullBranchName)<cr> <cr><C-w>:call term_wait('', 1000)<cr> <cr><C-w>:call term_sendkeys('', 'exit')<cr> <cr><C-w>:call term_wait('', 10)<cr> <cr><C-w>:echo 'Swiched to branch: ' . fullBranchName<cr> <cr>
+
+" @1 = branch name 
+" @2 = be or fe
+"nnoremap <leader>bs :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'tmux display-message -p "#S"')<cr> <cr><C-w>:call term_wait('', 30)<cr> <cr><C-w>Nkwwv$hy<C-w>:let @1 = tolower(expand('<C-r>"'))<cr>bbvwhy<C-w>:let @2 = tolower(expand('<C-r>"'))<cr><Insert><cr> <cr><C-w>:let commandOne = tolower(@2) . ' && git stash && git fetch -a'<cr><C-w>:call term_sendkeys('', commandOne)<cr> <cr><C-w>:call term_wait('', 1000)<cr> <cr><C-w>:call term_sendkeys('', 'git branch -a')<cr> <cr><C-w>:call term_wait('', 1400)<cr> <cr>G<C-w>:call term_wait('', 10)<cr> <cr>gg<C-w>N?<C-r>1<cr>v$hy<Insert>q<C-w>:let fullBranchName = expand('<C-r>"')<cr> <cr><C-w>:let commandTwo = 'cd && ./switch_' . tolower(@2) . '.sh'<cr><C-w>:call term_sendkeys('', commandTwo)<cr> <cr><C-w>:call term_wait('', 500)<cr> <cr><C-w>:call term_sendkeys('', fullBranchName)<cr> <cr><C-w>:call term_wait('', 1000)<cr> <cr><C-w>:call term_sendkeys('', 'exit')<cr> <cr><C-w>:call term_wait('', 10)<cr> <cr><C-w>:echo 'Swiched to branch: ' . fullBranchName<cr> <cr>
+
+" Branch Switcher
+function BranchSwitch()
+    " Open terminal
+    :term
+    " Move terminal to the right
+    :execute "normal! \<C-w>L"
+    " Get the current branch name
+    :call term_sendkeys('', 'tmux display-message -p "#S"')
+    :call feedkeys("\<cr>")
+    :call feedkeys("\<C-w>:call term_wait('', 1000)\<cr>")
+    " Yank branch name from the terminal output 
+    :call feedkeys("\<C-w>Nkwwv$hy")
+    " Put yanked branch into variable name
+    :let yankRegister = '@"'
+    :let yankBranchToVariable = "\<C-w>:let branchNamePartial = tolower(expand(". yankRegister ."))\<cr>"
+    :call feedkeys(yankBranchToVariable)
+    :call feedkeys("\<Insert>")
+    " Verify we have branchNamePartial 
+    " :call feedkeys("\<C-w>:call feedkeys(branchNamePartial)\<cr>")
+    " Yank be or fe prefix included in tmux session name
+    :call feedkeys("\<C-w>Nk^vwhy")
+    :let yankBeOrFeToVariable = "\<C-w>:let beOrFe = tolower(expand(". yankRegister ."))\<cr>"
+    :call feedkeys(yankBeOrFeToVariable)
+    :call feedkeys("\<Insert>")
+    "" Verify we have beOrFe
+    ":call feedkeys("\<C-w>:call feedkeys(beOrFe)\<cr>")
+    " Use the fe or be variable to change directory to backend or frontend code base
+    :call feedkeys("\<C-w>:let cdAndGitStashAndGitFetchCommand = beOrFe . ' \&\& git stash \&\& git fetch -a'\<cr>")
+    :call feedkeys("\<C-w>:call feedkeys(cdAndGitStashAndGitFetchCommand)\<cr>")
+    " Hit enter from the terminal on the command
+    :let carriageReturn = '"\<cr>"'
+    :call feedkeys("\<C-w>:call feedkeys(" . carriageReturn . ")\<cr>")
+    " Call git branch -a 
+    :call feedkeys("\<C-w>:call feedkeys('git branch -a')\<cr> \<cr>")
+    :let carriageReturn = '"\<cr>"'
+    :call feedkeys("\<C-w>:call feedkeys(" . carriageReturn . ")\<cr>")
+    " Sleep 
+    :call feedkeys("\<C-w>:sleep 100ms\<cr>")
+    :let carriageReturn = '"\<cr>"'
+    :call feedkeys("\<C-w>:call feedkeys(" . carriageReturn . ")\<cr>")
+    " Scroll to bottom and then back to top of `git branch` a output
+    :call feedkeys("\<C-w>:call feedkeys('G')\<cr>")
+    " Sleep 
+    :call feedkeys("\<C-w>:sleep 500ms\<cr>")
+    :let carriageReturn = '"\<cr>"'
+    :call feedkeys("\<C-w>:call feedkeys(" . carriageReturn . ")\<cr>")
+    " Find the branch that starts with our branch number
+    ":call feedkeys("\<C-w>N")
+    " :call feedkeys("gg\<C-w>N?\<C-r>1\<cr>v$hy\<Insert>q")
+    " :call feedkeys("\<C-w>:let fullBranchName = expand('\<C-r>"')\<cr> \<cr>")
+    " :call feedkeys("\<C-w>:let commandTwo = 'cd && ./switch_' . tolower(@2) . '.sh'\<cr>")
+    " :call feedkeys("\<C-w>:call term_sendkeys('', commandTwo)\<cr> \<cr>")
+    " :call feedkeys("\<C-w>:call term_wait('', 500)\<cr> \<cr>")
+    " :call feedkeys("\<C-w>:call term_sendkeys('', fullBranchName)\<cr> \<cr>")
+    " :call feedkeys("\<C-w>:call term_wait('', 1000)\<cr> \<cr>")\
+    " :call feedkeys("\<C-w>:call term_sendkeys('', 'exit')\<cr> \<cr>")
+    " :call feedkeys("\<C-w>:call term_wait('', 10)\<cr> \<cr>")
+    " :call feedkeys("\<C-w>:echo 'Swiched to branch: ' . fullBranchName\<cr> \<cr>")
+endfunction
+nnoremap <leader>bs :call BranchSwitch()<cr>
+
+" XXX vim has sessions this was pointless
+" " Session Saver
+" function SessionSaver()
+"     :let sessionName = trim(system('tmux display-message -p "#S"'))
+"     :let sessionTimeStamp = substitute(strftime("%c"), " ", "-", "g")
+"     :let sessionFolderRoot = "~/save"
+"     :let sessionFolder = sessionFolderRoot . "/" . sessionName
+"     :let timeStampFile = sessionFolder . "/" . substitute(sessionTimeStamp, ":", "\:", "g")
+"     :let allTimeFile = sessionFolder . "/" . sessionName 
+"     :let dot = '.'
+"     :let currentTab = tabpagenr()
+"     :try
+"     :  silent! execute "!mkdir " . sessionFolderRoot 
+"     :  silent! execute "!mkdir " . sessionFolder 
+"     :  silent! execute "!touch " . timeStampFile
+"     :  silent! execute "!touch " . allTimeFile
+"     :  execute "normal! \<C-L>"
+"     :endtry
+"     :try
+"     :  tabdo silent! execute "windo let fileData = @% . ' - LINE ' . line(dot) . ' - TAB ' . tabpagenr() | silent! execute '! echo ' . fileData . ' >> ' . timeStampFile | silent! execute '! echo ' . fileData . ' >> ' . allTimeFile"
+"     :endtry
+"     :silent! execute "normal! " . currentTab . "gt"
+" endfunction
+" nnoremap <leader>ss :call SessionSaver()<cr>
+
+" XXX vim has sessions this was pointless
+" " Session Loader Recent
+" function SessionLoaderRecent()
+"     :term
+"     :execute "normal! \<C-w>L"
+"     :let sessionName = trim(system('tmux display-message -p "#S"'))
+"     :let sessionFolderRoot = "~/save"
+"     :let sessionFolder = sessionFolderRoot . "/" . sessionName
+"     :let findRecentFileCommand = "! ls -lt " . sessionFolder . "\<cr>"
+"     :let catSessionHistoryFilePath = 'cat ' . sessionFolder . "/"
+"     :call term_sendkeys('', findRecentFileCommand)
+"     :call term_wait('', 1000)
+"     :call feedkeys("\<C-w>N")
+"     :call feedkeys("5G$vF ly")
+"     :call feedkeys("\<C-w>:let @9 = @0\<cr>")
+"     :let weirdS = '"#S"'
+"     :let getTmuxCommand = "'tmux display-message -p " . weirdS .  "'"
+"     :let getSessionName = "\<C-w>:let sessionName = trim(system(" . getTmuxCommand . "))\<cr>"
+"     :call feedkeys(getSessionName)
+"     :let getFileContentsCommand = "\<C-w>:let fileContentsCommand = 'cat ~/save/' . sessionName . '/' . substitute(@9, ':', '\:', 'g')\<cr>"
+"     :call feedkeys(getFileContentsCommand)
+"     :call feedkeys("\<C-w>:call term_sendkeys('', fileContentsCommand)\<cr>\<C-w>:call term_wait('', 10)\<cr>")
+"     :call feedkeys("\<Insert>\<cr>\<C-w>:call term_wait('', 10)\<cr>")
+"     :call feedkeys("\<C-w>N")
+"     :call feedkeys("\?cat \\~\\/save\<cr>")
+"     :call feedkeys("^jvG$ky\<C-w>:new\<cr>pGdd\<C-w>j\<C-w>:q!\<cr>")
+"     :call feedkeys("\<C-w>:set buftype=nofile\<cr>")
+"     :call feedkeys("\<C-w>:let linesInFile = line('.')\<cr>")
+" endfunction
+" nnoremap <leader>slr :call SessionLoaderRecent()<cr>
+
+" Window size
+nnoremap <leader>ww :vertical resize 100<cr>
+nnoremap <leader>wh :resize 35<cr>
+
+" XXX this made sense when I didn't realize you could fix vim's shitty behavior 
+" where if a monitor is wide, it breaks and compresses all splits, this was a solution
+" but know I realize we can fix vim to behave like normal on wide ass monitors
+" " Flip left or right like pages in a book when you have a shit load of windows open
+" nnoremap <leader>fl <C-w>h<C-w>\|^
+" nnoremap <leader>fr <C-w>l<C-w>\|^
+
+
+"""""""""""""""""""""""""""
+" Set the color column to 120
+"""""""""""""""""""""""""""
+set cc=121
+hi ColorColumn ctermbg=lightgreen guibg=lightgreen
+
+
+"""""""""""""""""""""""""""
+" Set highlight search
+"""""""""""""""""""""""""""
+set hls
+
+
+"""""""""""""""""""""""""""
+" Spell
+"""""""""""""""""""""""""""
+setlocal spell spelllang=en_us
+
+
+"""""""""""""""""""""""""""
+" Fix bug where you can't 
+" resize windows with big 
+" ass monitors
+"""""""""""""""""""""""""""
+set ttymouse=sgr
+
+
+"""""""""""""""""""""""""""
+" Vimspector
+"""""""""""""""""""""""""""
+let g:vimspector_enable_mappings='HUMAN'
+
+
+"""""""""""""""""""""""""""
+" Relative number
+"""""""""""""""""""""""""""
+set relativenumber
+
+
+"""""""""""""""""""""""""""
+" Make netrw shut up when 
+" you add or delete or 
+" remove a file and try to 
+" exit netrw afterwards
+"""""""""""""""""""""""""""
+autocmd FileType netrw setl bufhidden=delete
