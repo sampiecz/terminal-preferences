@@ -104,7 +104,20 @@ set background=light
 """""""""""""""""""""""""""
 " Indenting 
 """""""""""""""""""""""""""
-filetype plugin indent on
+"filetype on
+"filetype plugin on
+"filetype indent on
+""""" set smartindent
+""""" set autoindent 
+""""" 
+""""" " No tabs should be inserted when tab is pressed only spaces, this defaults to 
+""""" autocmd Filetype python set expandtab 
+""""" 
+""""" " For python, tabs count as 4 spaces, ideally tabs will never exist anyway
+""""" autocmd Filetype python set tabstop=4 
+""""" 
+""""" " For python, using >> will insert 4 spaces
+""""" autocmd Filetype python set sw=4 
 
 
 """""""""""""""""""""""""""
@@ -164,8 +177,6 @@ set ttymouse=xterm2
 " XXX
 """""""""""""""""""""""""""
 set nowrap
-set smartindent
-set autoindent
 
 """""""""""""""""""""""""""
 " Folds
@@ -241,10 +252,18 @@ nnoremap <leader>gdb :new<cr>:r!git branch<cr>?*<cr>wv$hy<C-w>:let currentGitBra
 nnoremap <leader>gdbf :let currentFileFullPath = expand('%:p')<cr>:new<cr>:r!git branch<cr>?*<cr>wv$hy<C-w>:let currentGitBranch = shellescape(expand('<C-r>"'))<cr><C-w>:q!<cr>:let gitDiffBranchCommand = 'git diff develop...' . currentGitBranch . ' ' . currentFileFullPath<cr>:term<cr><C-w>:call term_sendkeys('', gitDiffBranchCommand)<cr> <cr><C-w>L
 nnoremap <leader>gb :let currentLineNumber = line ('.')<cr>:let currentFileFullPath = expand('%:p')<cr>:let gitBlameCommand = 'git blame ' . currentFileFullPath . ' --color-by-age -w'<cr>:term<cr><C-w>:call term_sendkeys('', gitBlameCommand)<cr> <cr><C-w>L<C-w>:let goToLine = currentLineNumber . 'G'<cr><C-w>:call term_sendkeys('', goToLine)<cr>
 nnoremap <leader>gcb :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'cleanup && git add -p && git commit -e')<cr> <cr>
+" git checkout previous branch
+nnoremap <leader>gcp :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'git checkout -')<cr> <cr>
 nnoremap <leader>gcbt :tabnew<cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'cleanup && git add -p && git commit -e')<cr> <cr>
 nnoremap <leader>gcbh :split<cr><C-w>j<cr><C-w>:term<cr> <cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'cleanup && git add -p && git commit -e')<cr> <cr><C-w>j<C-w>:q!<cr>
 nnoremap <leader>gcf :tabnew<cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'npm run lint:fix && git add -p && git commit -e')<cr> <cr>
 nnoremap <leader>gcfh :split<cr><C-w>j<cr><C-w>:term<cr> <cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'npm run lint:fix && git add -p && git commit -e')<cr> <cr><C-w>j<C-w>:q!<cr>
+nnoremap <leader>gl :split<cr><C-w>j<cr><C-w>:term<cr> <cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'git log --graph --oneline --decorate')<cr> <cr><C-w>j<C-w>:q!<cr>
+nnoremap <leader>gbi :split<cr><C-w>j<cr><C-w>:term<cr> <cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'git bisect start')<cr> <cr><C-w>j<C-w>:q!<cr>
+" then do git bisect bad or git bisect good
+nnoremap <leader>gri :split<cr><C-w>j<cr><C-w>:term<cr> <cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'git rebase develop --interactive')<cr> <cr><C-w>j<C-w>:q!<cr>
+nnoremap <leader>grs :split<cr><C-w>j<cr><C-w>:term<cr> <cr><C-w>:term<cr> <cr><C-w>j<C-w>:q!<cr><C-w>:call term_sendkeys('', 'git rebase develop --i --autosquash')<cr> <cr><C-w>j<C-w>:q!<cr>
+" can do git commit --squash to help above command work seamlessly
 " XXX - put proper directories here
 nnoremap <leader>gbe :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'cd ~/backend')<cr> <cr>
 nnoremap <leader>gfe :term<cr> <cr><C-w>L<C-w>:call term_sendkeys('', 'cd ~/frontend')<cr> <cr>
@@ -523,3 +542,105 @@ set relativenumber
 " exit netrw afterwards
 """""""""""""""""""""""""""
 autocmd FileType netrw setl bufhidden=delete
+
+
+"""""""""""""""""""""""""""
+" Autocomplete
+"""""""""""""""""""""""""""
+" XXX
+
+
+"""""""""""""""""""""""""""
+" Git diff tool 
+"""""""""""""""""""""""""""
+" git mergetool
+" :diffu
+" :diffo
+" :difft
+" :diffget 2
+" :diffget 3
+" :diffget 4
+" :diffget LOCAL
+" :diffget REMOTE?
+" ]c
+" [c
+" hi DiffText guibg=darkred
+" git reset --hard
+" XXX
+
+
+"""""""""""""""""""""""""""
+" Potentiall more robust
+" Sub search command
+"""""""""""""""""""""""""""
+" find . -name \*.py -exec grep -H board '{}' \;
+" ack searchterm --html
+" XXX
+
+
+"""""""""""""""""""""""""""
+" Git worktrees 
+"""""""""""""""""""""""""""
+" git clone --bare git@github.com:sampiecz/repo-name.git 
+" cd repo-name
+" git worktree add somebranchname
+" git worktree add someotherbranchname
+" git worktree add somenewbranchname
+" git worktree remove someotherbranchname --force
+" XXX
+
+
+"""""""""""""""""""""""""""
+" Git log 
+"""""""""""""""""""""""""""
+" git log -S 'some text you want to find in commits'
+" useful for bug squashing
+" once you've found some commits you can git bisect
+
+
+"""""""""""""""""""""""""""
+" Python - quick fix list
+"""""""""""""""""""""""""""
+" NOTE:
+" set makeprg=pytest
+" make
+" set makeprg=flake8 probs want pre-commit here
+" make
+" %file: line %linenum: %errormessage
+" 
+" XXX pytest
+function PytestQuickFix()
+  if exists("current_compiler")
+    finish
+  endif
+  let current_compiler = 'python'
+  setlocal makeprg=%
+  setlocal errorformat=%f:\ line\ %l:\ %m
+endfunction
+  nnoremap <leader>bs :call BranchSwitch()<cr>
+"
+" XXX lint
+" if exists("current_compoiler")
+"   finish
+" endif
+" let current_compiler = 'python'
+" setlocal makeprg=%
+" setlocal errorformat=%f:\ line\ %l:\ %m
+"
+" XXX manage.py running this will be hard 
+" if exists("current_compoiler")
+"   finish
+" endif
+" let current_compiler = 'python'
+" setlocal makeprg=%
+" setlocal errorformat=%f:\ line\ %l:\ %m
+
+
+
+
+
+"""""""""""""""""""""""""""
+" JS - quick fix list
+"""""""""""""""""""""""""""
+
+
