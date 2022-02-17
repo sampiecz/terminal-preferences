@@ -1,0 +1,5 @@
+[merge]
+	tool = gvimdiff
+[user]
+	email = sam@samuelpiecz.com
+	name = sampiecz
