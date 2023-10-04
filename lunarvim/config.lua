@@ -4,6 +4,7 @@ vim.opt.relativenumber = true
 vim.opt.foldmethod = "expr" -- use treesitter folding
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 
+
 -- Mappings
 lvim.builtin.which_key.mappings["h"] = {
   name = "Harpoon",
@@ -29,6 +30,7 @@ lvim.format_on_save = {
 lvim.use_icons = true
 lvim.builtin.terminal.open_mapping = "<c-t>"
 lvim.builtin.bufferline.active = false
+
 
 -- Plugins
 lvim.plugins = {
@@ -113,7 +115,8 @@ lvim.plugins = {
 
 }
 
--- Debugging
+
+-- Debug Adapters
 require("dap").adapters["pwa-node"] = {
   type = "server",
   host = "localhost",
@@ -123,4 +126,18 @@ require("dap").adapters["pwa-node"] = {
     args = { "/home/megasquid/.local/share/lvim/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js",
       "${port}" },
   }
+}
+
+
+-- Debug Config
+lvim.builtin.dap.ui.config.controls.icons = {
+  pause = "",
+  play = "",
+  step_into = "",
+  step_over = "",
+  step_out = "",
+  step_back = "",
+  run_last = "",
+  terminate = "",
+  disconnect = "",
 }
